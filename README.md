@@ -12,6 +12,32 @@ Mobile-first, offline-first football scouting PWA. Sprint 1 includes:
 - Installable PWA manifest and network-first service worker
 - Responsive dark touchline UI
 
+## Sprint 1.1 — confirmed line-ups
+
+- Source-neutral import blocks prepared from photographed sheets, official social accounts, club sites, or league sources
+- Mandatory editable review before a line-up is accepted
+- Official source link, publication detail, status, and uncertainty retention
+- Automatic two-team starting positions on the pitch
+- Separate substitutes bench with players available for observations
+- Missing-source, missing-number, uncertainty, and non-11-player warnings
+- Re-import support that replaces only the previously imported side
+
+```text
+Team: Example FC
+Opponent: Another FC
+Status: Confirmed
+Source: Official Example FC account
+Source URL: https://example.com/team-news
+Published: 14 August 2026, 14:00
+Starting XI:
+1 | Player Name
+2 | Player Name
+Substitutes:
+12 | Player Name
+Uncertainties:
+None
+```
+
 ## Run locally
 
 Requires Node.js 20+ and Python 3 for the local static server. The app has no package dependencies.

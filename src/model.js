@@ -1,6 +1,15 @@
 export const actions={Involvement:['Pass','Carry','Cross','Shot'],Defending:['Duel','Interception','Tackle','Header'],Positioning:['Movement','Shape','Transition','Press'],Mindset:['Composure','Decision','Work rate','Communication']};
 export const qualities=['Positive','Neutral','Negative'];
-export const freshState=()=>({match:null,players:[],events:[],clock:{seconds:0,running:false,startedAt:null}});
+export const freshState=()=>({match:null,players:[],events:[],lineups:{home:null,away:null},clock:{seconds:0,running:false,startedAt:null}});
 export function formatClock(seconds){const s=Math.max(0,Math.floor(seconds));return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`}
 export function liveSeconds(clock,now=Date.now()){return clock.seconds+(clock.running?Math.floor((now-clock.startedAt)/1000):0)}
 export function makeEvent({player,quality,action,detail,note,second}){return{id:crypto.randomUUID(),playerId:player.id,playerName:player.name,number:player.number,quality,action,detail,note:note.trim(),second,createdAt:Date.now()}}
+const headings={team:'team',opponent:'opponent','match date':'matchDate',status:'status',source:'source','source url':'sourceUrl',published:'published','starting xi':'starters',starters:'starters',substitutes:'substitutes',subs:'substitutes',uncertainties:'uncertainties'};
+export function parseLineupBlock(text){
+ const result={team:'',opponent:'',matchDate:'',status:'',source:'',sourceUrl:'',published:'',starters:[],substitutes:[],uncertainties:[]};let section='';
+ for(const raw of text.split(/\r?\n/)){const line=raw.trim();if(!line)continue;const match=line.match(/^([^:]+):\s*(.*)$/);if(match&&headings[match[1].trim().toLowerCase()]){section=headings[match[1].trim().toLowerCase()];const value=match[2].trim();if(['starters','substitutes','uncertainties'].includes(section)){if(value&&value.toLowerCase()!=='none')section==='uncertainties'?result.uncertainties.push(value):result[section].push(parsePlayer(value))}else result[section]=value;continue}if(section==='starters'||section==='substitutes')result[section].push(parsePlayer(line));else if(section==='uncertainties'&&line.toLowerCase()!=='none')result.uncertainties.push(line.replace(/^[-•]\s*/,''));
+ }
+ result.starters=result.starters.filter(p=>p.name);result.substitutes=result.substitutes.filter(p=>p.name);return result;
+}
+function parsePlayer(line){const clean=line.replace(/^[-•]\s*/,'').trim();const pipe=clean.match(/^(\d{1,2}|\?)\s*[|–—-]\s*(.+)$/);const spaced=clean.match(/^(\d{1,2}|\?)\.?\s+(.+)$/);const match=pipe||spaced;return match?{number:match[1]==='?'?'':match[1],name:match[2].trim()}:{number:'',name:clean}}
+export function lineupWarnings(lineup){const warnings=[];if(!lineup.team)warnings.push('Team name is missing');if(!lineup.source)warnings.push('Official source is missing');if(!lineup.sourceUrl)warnings.push('Source URL is missing');if(lineup.starters.length!==11)warnings.push(`Starting XI contains ${lineup.starters.length} players`);if(lineup.starters.some(p=>!p.number))warnings.push('One or more starters have no shirt number');if(lineup.uncertainties.length)warnings.push(`${lineup.uncertainties.length} uncertainty note${lineup.uncertainties.length===1?'':'s'} to review`);return warnings}

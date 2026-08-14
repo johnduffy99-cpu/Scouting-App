@@ -60,6 +60,7 @@ None
 - Separate Full-time and End scouting early workflows with closing notes or dictation
 - Early-ending reasons retained without incorrectly marking the match as completed
 - Final match summary with score, elapsed time, event totals, closing note, and complete timeline
+- Safe Reopen session control for correcting an accidental ending or continuing a test
 
 ## Run locally
 

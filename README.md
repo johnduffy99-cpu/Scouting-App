@@ -38,6 +38,16 @@ Uncertainties:
 None
 ```
 
+## Sprint 1.2 — observation capture
+
+- Four-colour Great, Good, Reasonable, and Poor quality scale with no default selection
+- Icon-led foot/body-part and 12-action grids
+- Two-screen capture flow with an optional visual pitch-area selector
+- Offline football-specific sentence generation with an editable timeline preview
+- Permanent player-to-team linkage in each new observation
+- Structured selections, original private note, generated prose, and final edited comment stored separately
+- Backward-compatible display of Sprint 1 and Sprint 1.1 timeline entries
+
 ## Run locally
 
 Requires Node.js 20+ and Python 3 for the local static server. The app has no package dependencies.

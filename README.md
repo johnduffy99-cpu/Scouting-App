@@ -57,6 +57,9 @@ None
 - Team-based substitutions that exchange pitch and bench players
 - Incoming players inherit the outgoing player’s pitch position
 - Half-time notes and substitutions are retained as distinct timeline events
+- Separate Full-time and End scouting early workflows with closing notes or dictation
+- Early-ending reasons retained without incorrectly marking the match as completed
+- Final match summary with score, elapsed time, event totals, closing note, and complete timeline
 
 ## Run locally
 

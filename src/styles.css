@@ -318,3 +318,13 @@ legend{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#91a39
 .running-score{display:flex;align-items:center;gap:5px;margin-left:auto;padding:7px 9px;border:1px solid #31503d;border-radius:11px;background:#0b1710;color:#fff;font-size:17px;font-weight:950;line-height:1}
 .running-score i{color:var(--green);font-style:normal}
 .live-head .running-score+.live-pill{margin-left:2px;writing-mode:vertical-rl;font-size:7px}
+.end-choice{display:grid;gap:4px;width:100%;margin:10px 0;border:1px solid #31503d;border-radius:14px;padding:15px;text-align:left;background:#101e16;color:#fff}
+.end-choice b{font-size:13px}.end-choice span{color:#8fa197;font-size:10px}
+.end-choice.full{border-color:#36a866}.end-choice.terminate{border-color:#9c643e;background:#21170f}
+.primary.danger{background:#e8884c;color:#1a0c04;box-shadow:0 10px 30px rgba(232,136,76,.14)}
+.end-event .quality{background:var(--green)}.terminated-event .quality{background:#e8884c}
+.summary-hero{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin:42px 0 22px;padding:20px 12px;border:1px solid #31503d;border-radius:20px;background:#0d1b13;text-align:center}
+.summary-hero p{margin:0;font-size:11px;font-weight:850}.summary-hero div{display:flex;gap:7px;align-items:center;font-size:28px;font-weight:950}.summary-hero i{color:var(--green);font-style:normal}.summary-hero>span{grid-column:1/-1;color:var(--green);font-size:12px;font-weight:850}
+.summary-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:18px}.summary-stats div{display:grid;gap:3px;padding:12px 5px;border:1px solid #263a2d;border-radius:13px;text-align:center}.summary-stats b{font-size:18px}.summary-stats span{font-size:8px;color:#82968b}
+.closing-summary{padding:15px;border:1px solid #2d6a46;border-radius:15px;background:#102219;margin-bottom:24px}.closing-summary.terminated{border-color:#8b5938;background:#21170f}.closing-summary small{display:block;margin-bottom:7px}.closing-summary b{font-size:12px}.closing-summary p{font-size:11px;line-height:1.5;color:#b9c8be;margin:7px 0 0}
+.form-error{margin:12px 0 0;padding:10px;border:1px solid #a64d4d;border-radius:10px;background:#2a1212;color:#ffb5b5;font-size:10px}

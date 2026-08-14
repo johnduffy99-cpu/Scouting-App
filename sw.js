@@ -1,4 +1,4 @@
-const CACHE='scoutline-v1-2-1';
+const CACHE='scoutline-v1-2-2';
 const ASSETS=['/','/index.html','/manifest.webmanifest','/icon.svg','/src/styles.css','/src/main.js','/src/model.js'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));

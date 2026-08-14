@@ -286,6 +286,7 @@ legend{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#91a39
 /* Sprint 1.2 icon and two-goalmouth refinements */
 .body-grid i,.action-grid i{width:29px;height:29px;font-size:0}
 .body-grid i svg,.action-grid i svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.body-grid i svg text{fill:currentColor;stroke:none;font:900 9px system-ui,sans-serif}
 .action-grid i svg{width:30px;height:30px}
 .area-pitch{grid-template-rows:32px repeat(3,56px) 32px;padding:25px 8px}
 .area-goal{top:auto;height:18px;font-size:6px}
@@ -296,3 +297,12 @@ legend{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#91a39
 .area-midfield-left{grid-column:1;grid-row:3}.area-midfield-centre{grid-column:2;grid-row:3}.area-midfield-right{grid-column:3;grid-row:3}
 .area-defensive-left{grid-column:1;grid-row:4}.area-defensive-centre{grid-column:2;grid-row:4}.area-defensive-right{grid-column:3;grid-row:4}
 .area-defensive-goalmouth{grid-column:2;grid-row:5}
+.goalkeeper-parts{grid-template-columns:repeat(4,1fr)}
+.goal-zone{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,72px);gap:4px;padding:10px;border:7px solid #e8f0ea;border-bottom-width:10px;background:#102219;box-shadow:inset 0 0 0 1px #71837a}
+.goal-zone label{margin:0!important}
+.goal-zone input{position:absolute;opacity:0}
+.goal-zone span{display:grid;place-items:center;height:100%;border:1px solid rgba(255,255,255,.28);background:linear-gradient(135deg,rgba(255,255,255,.05),transparent);color:#e8f0ea;text-align:center;font-size:9px;line-height:1.2}
+.goal-zone input:checked+span{background:rgba(55,233,135,.72);border-color:#baffd1;color:#06100a;font-weight:950}
+.review-player{grid-template-columns:58px 1fr auto}
+.review-player .gk-check{display:flex;align-items:center;gap:4px;margin:0;padding:0 4px;color:#9db0a4;font-size:9px}
+.review-player .gk-check input{width:auto;margin:0}

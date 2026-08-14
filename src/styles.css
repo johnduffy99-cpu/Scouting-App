@@ -314,3 +314,7 @@ legend{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#91a39
 .compact-modal .helper b{color:#fff}
 .system-event .quality{background:#87998e}
 .substitution-event .quality{background:#54a8ff}
+.match-heading{flex:1;min-width:0}
+.running-score{display:flex;align-items:center;gap:5px;margin-left:auto;padding:7px 9px;border:1px solid #31503d;border-radius:11px;background:#0b1710;color:#fff;font-size:17px;font-weight:950;line-height:1}
+.running-score i{color:var(--green);font-style:normal}
+.live-head .running-score+.live-pill{margin-left:2px;writing-mode:vertical-rl;font-size:7px}

@@ -41,7 +41,7 @@ None
 ## Sprint 1.2 — observation capture
 
 - Four-colour Great, Good, Reasonable, and Poor quality scale with no default selection
-- Icon-led foot/body-part and 12-action grids
+- Icon-led foot/body-part and 13-action grids, including Goal
 - Two-screen capture flow with an optional visual pitch-area selector
 - Goalkeeper identification during lineup import and review
 - Goalkeeper-specific contact and action choices with a nine-zone save-location goal

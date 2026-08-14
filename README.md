@@ -50,6 +50,14 @@ None
 - Structured selections, original private note, generated prose, and final edited comment stored separately
 - Backward-compatible display of Sprint 1 and Sprint 1.1 timeline entries
 
+## Sprint 1.3 — match management
+
+- First-half, half-time, and second-half clock states with stoppage-time display
+- Confirmed half-time transition with private typed or dictated notes
+- Team-based substitutions that exchange pitch and bench players
+- Incoming players inherit the outgoing player’s pitch position
+- Half-time notes and substitutions are retained as distinct timeline events
+
 ## Run locally
 
 Requires Node.js 20+ and Python 3 for the local static server. The app has no package dependencies.

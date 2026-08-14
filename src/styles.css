@@ -306,3 +306,11 @@ legend{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#91a39
 .review-player{grid-template-columns:58px 1fr auto}
 .review-player .gk-check{display:flex;align-items:center;gap:4px;margin:0;padding:0 4px;color:#9db0a4;font-size:9px}
 .review-player .gk-check input{width:auto;margin:0}
+.match-state-btn{display:block;width:100%;margin:0 0 14px;border:1px solid #a77a36;background:#2a2113;color:#ffd58e;border-radius:12px;padding:11px;font-weight:850}
+.interval-actions{display:grid;grid-template-columns:1fr 1.35fr;gap:8px;margin:0 0 14px;padding:10px;border:1px solid #31503d;border-radius:14px;background:#0e1c14}
+.interval-actions button{border:1px solid #31503d;background:#13251a;color:#b9cabf;border-radius:10px;padding:10px 7px;font-size:9px;font-weight:850}
+.interval-actions .accent{border-color:var(--green);background:var(--green);color:#06100a}
+.compact-modal{max-width:430px}
+.compact-modal .helper b{color:#fff}
+.system-event .quality{background:#87998e}
+.substitution-event .quality{background:#54a8ff}

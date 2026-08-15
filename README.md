@@ -92,6 +92,10 @@ npm run preview
 
 No environment variables or backend are required for Sprint 1. Data stays in the browser and is private to that browser profile. Clearing site data removes it. Browser dictation availability varies; Chrome-family browsers provide the widest support and will request microphone permission.
 
+## Match backup
+
+While a match exists, **Download match backup** is available in both the live workspace and the completed-match summary. It downloads a JSON copy containing the complete current match state, including match details, players, line-ups, clock, timeline/events, notes, status, and any other stored fields. Exporting does not change the match saved in the browser. Restoring a backup is intentionally not included yet; restore will be a separate, validated step to prevent a backup from overwriting a good live session.
+
 ## Next sprint
 
-Add Supabase authentication and encrypted cloud sync, reusable squads, match export, reporting, and multi-device continuity while retaining the offline queue.
+Add Supabase authentication and encrypted cloud sync, reusable squads, validated match restore, reporting, and multi-device continuity while retaining the offline queue.

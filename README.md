@@ -62,6 +62,23 @@ None
 - Final match summary with score, elapsed time, event totals, closing note, and complete timeline
 - Safe Reopen session control for correcting an accidental ending or continuing a test
 
+## Version 1.4 — match-day fixes
+
+- Touch-friendly Save to timeline control stays visible at the bottom of the observation panel
+- Immediate saved confirmation and a submission lock prevent uncertain or duplicate saves
+- Match clock requires a deliberate 1.2-second hold to pause or resume
+- Running, paused, half-time, full-time, and ended clock states use explicit status labels and colours
+- Match-day action grid uses Run and Skill in place of the unused Foul won and Foul choices
+- Dictation shows listening, live recognition, completion, unsupported-browser, and error states while preserving typed notes
+- Finish Later stops and preserves the completed match, flags the report as unfinished, retains a final-note draft, and resumes without duplicating the full-time timeline event
+- Live note fields use a mobile-safe text size to prevent focus zoom; pitch and rapid-selection surfaces block pinch scaling while page-level accessibility zoom remains available elsewhere
+
+## Version 2.0 workload
+
+- Configurable action-icon bank containing common football observation words
+- Let each user select and arrange their preferred actions for the main match-day grid
+- Keep sensible role-based defaults while supporting different scouting assignments and personal workflows
+
 ## Run locally
 
 Requires Node.js 20+ and Python 3 for the local static server. The app has no package dependencies.

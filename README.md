@@ -1,4 +1,9 @@
-# Scoutline — Sprint 1
+# Scoutline — Version 1.5
+
+Roadmap styles:
+
+- [Clean editable roadmap](docs/scouting-app-roadmap.html)
+- [Illustrated football roadmap](docs/scouting-app-roadmap-illustrated.png)
 
 Mobile-first, offline-first football scouting PWA. Sprint 1 includes:
 
@@ -71,7 +76,19 @@ None
 - Match-day action grid uses Run and Skill in place of the unused Foul won and Foul choices
 - Dictation shows listening, live recognition, completion, unsupported-browser, and error states while preserving typed notes
 - Finish Later stops and preserves the completed match, flags the report as unfinished, retains a final-note draft, and resumes without duplicating the full-time timeline event
+- Terminate scouting also supports Finish Later, preserving the selected reason and closing-note draft and updating a single early-ending timeline event when completed
 - Live note fields use a mobile-safe text size to prevent focus zoom; pitch and rapid-selection surfaces block pinch scaling while page-level accessibility zoom remains available elsewhere
+
+## Version 1.5 — capture-to-report workflow
+
+- A stable, versioned structured JSON export preserves match details, confirmed line-ups, players, clock state, score evidence, timestamped observations, substitutions, closing events, notes, and data-quality warnings.
+- Observation exports keep the original note, generated wording, and scout-edited final comment as separate fields.
+- A standard Markdown AI handoff report is generated from the same structured record, with fixed match, team-sheet, timeline, tactical, player, closing-assessment, and data-quality sections.
+- The handoff explicitly tells onward AI not to invent missing details and to distinguish recorded evidence from inference.
+- Export filenames use the fixture and match date and remain safe across common filesystems.
+- The completed-match screen provides separate downloads for structured match data, the AI handoff report, and the existing safety backup.
+
+See [Version 1.5 change and deployment notes](docs/V1.5-CHANGELOG.md).
 
 ## Version 2.0 workload
 
@@ -113,6 +130,13 @@ No environment variables or backend are required for Sprint 1. Data stays in the
 
 While a match exists, **Download match backup** is available in both the live workspace and the completed-match summary. It downloads a JSON copy containing the complete current match state, including match details, players, line-ups, clock, timeline/events, notes, status, and any other stored fields. Exporting does not change the match saved in the browser. Restoring a backup is intentionally not included yet; restore will be a separate, validated step to prevent a backup from overwriting a good live session.
 
-## Next sprint
+## Recorded post-V1.5 backlog
+
+- Improve captain-label readability on pitch markers.
+- Add disciplinary events and sent-off player state.
+- Add an Other action bank and a direct Quick Note route.
+- Bring standardised photo, screenshot, and verified online line-up acquisition into the app while keeping every imported line-up editable.
+
+## Later roadmap
 
 Add Supabase authentication and encrypted cloud sync, reusable squads, validated match restore, reporting, and multi-device continuity while retaining the offline queue.

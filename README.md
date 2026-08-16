@@ -95,7 +95,7 @@ See [Version 1.5 change and deployment notes](docs/V1.5-CHANGELOG.md).
 - Automatic AI extraction from photographed paper team sheets and lineup screenshots, followed by mandatory editable review.
 - Match date, venue and kick-off metadata.
 - Explicit goalkeeper, captain and scouting-target identification.
-- Highly visible CAPTAIN pitch labels.
+- Captain identification retained in lineup review and exports without adding visual clutter to pitch icons.
 - Wide Quick Note route with player, team or general-match attribution.
 - A quality-rated free-observation route that bypasses body-part and action selection.
 - Other-event bank for cards, sending off, injury, treatment, role changes and leadership.

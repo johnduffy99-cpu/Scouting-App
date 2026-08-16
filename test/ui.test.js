@@ -23,3 +23,8 @@ test('limits gesture locking to match-day interaction surfaces',()=>{
  assert.doesNotMatch(css,/body\{[^}]*touch-action:(?:none|pan-y)/);
  assert.doesNotMatch(css,/\.shell\{[^}]*touch-action:(?:none|pan-y)/);
 });
+
+test('provides the wide Quick Note route and explicit note scopes',()=>{
+ assert.match(css,/\.quick-note-button\{[^}]*grid-column:span 3/);
+ assert.match(css,/\.note-scope>div\{[^}]*grid-template-columns:repeat\(3,1fr\)/);
+});

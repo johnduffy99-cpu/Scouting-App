@@ -1,4 +1,4 @@
-# Scoutline — Version 1.5
+# Scoutline — Version 1.6
 
 Roadmap styles:
 
@@ -90,6 +90,24 @@ None
 
 See [Version 1.5 change and deployment notes](docs/V1.5-CHANGELOG.md).
 
+## Version 1.6 — field-test-ready workflow
+
+- Automatic AI extraction from photographed paper team sheets and lineup screenshots, followed by mandatory editable review.
+- Match date, venue and kick-off metadata.
+- Explicit goalkeeper, captain and scouting-target identification.
+- Highly visible CAPTAIN pitch labels.
+- Wide Quick Note route with player, team or general-match attribution.
+- A quality-rated free-observation route that bypasses body-part and action selection.
+- Other-event bank for cards, sending off, injury, treatment, role changes and leadership.
+- Sent-off players are removed from the pitch while the disciplinary event remains in the timeline and export.
+- Formation, tactical, rating, strengths and development-area evidence fields.
+- Safe validated restoration of Version 1 match backups.
+- Version 1.6 JSON and AI handoff outputs with stronger missing-data warnings and concise relevant-player sections.
+
+Automatic extraction requires `OPENAI_API_KEY` in the Vercel project environment. The key is used only by the server function and is never included in browser code. `OPENAI_LINEUP_MODEL` is optional and defaults to `gpt-5.6-luna`. Set `SCOUTLINE_ALLOWED_ORIGIN` to the permanent production address to reject browser requests from other sites; the function also limits repeated requests from one address.
+
+See [Version 1.6 field-test and deployment notes](docs/V1.6-FIELD-TEST.md).
+
 ## Version 2.0 workload
 
 - Configurable action-icon bank containing common football observation words
@@ -124,18 +142,11 @@ npm run preview
 3. Set the build command to `npm run build` and the output directory to `dist`.
 4. Select **Deploy**.
 
-No environment variables or backend are required for Sprint 1. Data stays in the browser and is private to that browser profile. Clearing site data removes it. Browser dictation availability varies; Chrome-family browsers provide the widest support and will request microphone permission.
+Match data stays in the browser and is private to that browser profile. The only backend operation is optional team-sheet image extraction; the image is sent to the app's Vercel function and then to OpenAI for extraction when the scout explicitly chooses it. Clearing site data removes the locally stored match. Browser dictation availability varies; Chrome-family browsers provide the widest support and will request microphone permission.
 
 ## Match backup
 
-While a match exists, **Download match backup** is available in both the live workspace and the completed-match summary. It downloads a JSON copy containing the complete current match state, including match details, players, line-ups, clock, timeline/events, notes, status, and any other stored fields. Exporting does not change the match saved in the browser. Restoring a backup is intentionally not included yet; restore will be a separate, validated step to prevent a backup from overwriting a good live session.
-
-## Recorded post-V1.5 backlog
-
-- Improve captain-label readability on pitch markers.
-- Add disciplinary events and sent-off player state.
-- Add an Other action bank and a direct Quick Note route.
-- Bring standardised photo, screenshot, and verified online line-up acquisition into the app while keeping every imported line-up editable.
+While a match exists, **Download match backup** is available in both the live workspace and the completed-match summary. It downloads a JSON copy containing the complete current match state. The home screen can validate and restore that file; the app shows the fixture and record totals and requires explicit confirmation before replacing the match currently stored in that browser.
 
 ## Later roadmap
 

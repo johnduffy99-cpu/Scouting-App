@@ -1,1 +1,1 @@
-{"name":"scouting-app","version":"1.6.1","private":true,"type":"module","scripts":{"dev":"python3 -m http.server 4173","build":"node scripts/build.mjs","preview":"python3 -m http.server 4173 -d dist","test":"node --test"}}
+{"name":"scouting-app","version":"1.7.0","private":true,"type":"module","scripts":{"dev":"python3 -m http.server 4173","build":"node scripts/build.mjs","preview":"python3 -m http.server 4173 -d dist","test":"node --test"}}

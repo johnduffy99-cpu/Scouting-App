@@ -130,7 +130,7 @@ footer span{color:var(--green)}
 
 .player{position:absolute;z-index:2;transform:translate(-50%,-50%);border:0;background:none;color:white;touch-action:none}
 
-.player span{display:grid;place-items:center;width:39px;height:39px;margin:auto;border-radius:50%;background:#0a1410;border:3px solid #d8fbe4;box-shadow:0 4px 12px #000;font-weight:900}
+.player span{display:grid;place-items:center;width:39px;height:39px;margin:auto;border-radius:50%;background:var(--team-color,#0a1410);color:var(--team-text,#fff);border:3px solid rgba(255,255,255,.82);box-shadow:0 4px 12px #000;font-weight:900}
 
 .player b{font-size:9px;background:#07100bd9;padding:3px 6px;border-radius:6px;white-space:nowrap}
 
@@ -223,8 +223,7 @@ legend{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#91a39
 .lineup-sources a{color:#78eaa5}
 .pitch-actions{display:flex;gap:8px;margin-top:10px}
 .pitch-actions button{flex:1;border:1px solid #31503d;background:#0d1b13;color:#b9cabf;border-radius:12px;padding:10px;font-size:10px;font-weight:800}
-.player.away span{background:#eef6f0;color:#0b1710;border-color:#102319}
-.player.away b{background:#edf5ef;color:#0b1710}
+.placement-notice{margin:0 0 9px;padding:10px 12px;border:1px solid #4f745d;border-radius:11px;background:#13251a;color:#bfffd7;text-align:center;font-size:10px;font-weight:850}
 .bench{padding:22px 0 4px}
 .bench-list{display:flex;gap:8px;overflow:auto;padding-bottom:5px}
 .bench-list button{display:grid;grid-template-columns:30px minmax(90px,1fr);grid-template-rows:auto auto;column-gap:8px;text-align:left;min-width:155px;border:1px solid #24372c;background:#0c1711;color:white;border-radius:13px;padding:9px}
@@ -337,6 +336,8 @@ legend{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#91a39
 .goal-zone input{position:absolute;opacity:0}
 .goal-zone span{display:grid;place-items:center;height:100%;border:1px solid rgba(255,255,255,.28);background:linear-gradient(135deg,rgba(255,255,255,.05),transparent);color:#e8f0ea;text-align:center;font-size:9px;line-height:1.2}
 .goal-zone input:checked+span{background:rgba(55,233,135,.72);border-color:#baffd1;color:#06100a;font-weight:950}
+.team-colour p{margin:-3px 0 10px;color:#819488;font-size:10px;line-height:1.4}.colour-swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.colour-swatches input{position:absolute;opacity:0}.colour-swatches span{display:grid;place-items:end center;min-height:54px;padding:31px 3px 5px;border:2px solid #293c31;border-radius:10px;background:linear-gradient(var(--swatch),var(--swatch)) top/100% 27px no-repeat,#0a140e;color:#b7c5bc;font-size:7px;font-weight:800}.colour-swatches input:checked+span{border-color:var(--green);box-shadow:0 0 0 2px rgba(55,233,135,.18)}.colour-clash{margin-top:9px;padding:9px;border:1px solid #c18a3d;border-radius:9px;background:#21190e;color:#ffd18b;font-size:9px;font-weight:800}.colour-clash[hidden]{display:none}
+.shot-origin{position:relative;display:grid;grid-template-columns:1fr 1.55fr 1.75fr 1.55fr 1fr;grid-template-rows:92px 86px;gap:2px;padding:18px 7px 7px;border:1px solid #416c50;border-radius:14px;background:repeating-linear-gradient(90deg,#123d27 0,#123d27 20%,#16482e 20%,#16482e 40%);overflow:hidden}.shot-origin:after{content:"";position:absolute;left:7px;right:7px;bottom:7px;border-bottom:1px dashed rgba(255,255,255,.7);pointer-events:none}.shot-goal{position:absolute;z-index:2;top:3px;left:42%;width:16%;height:17px;border:3px solid #e8f0ea;border-bottom:0}.shot-origin label{margin:0!important;position:relative;z-index:1}.shot-origin input{position:absolute;opacity:0}.shot-origin span{display:grid;place-items:center;width:100%;height:100%;padding:4px;border:1px solid rgba(255,255,255,.42);color:#e8f0ea;text-align:center;font-size:8px;line-height:1.2}.shot-origin input:checked+span{background:rgba(55,233,135,.72);border-color:#baffd1;color:#06100a;font-weight:950}.shot-wide-left{grid-column:1;grid-row:1}.shot-box-left{grid-column:2;grid-row:1}.shot-box-centre{grid-column:3;grid-row:1}.shot-box-right{grid-column:4;grid-row:1}.shot-wide-right{grid-column:5;grid-row:1}.shot-outside-box-left{grid-column:1/4;grid-row:2}.shot-outside-box-right{grid-column:4/6;grid-row:2}.gk-outcomes{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.gk-outcomes label{margin:0!important}.gk-outcomes input{position:absolute;opacity:0}.gk-outcomes span{display:grid;place-items:center;min-height:44px;border:1px solid #31503d;border-radius:11px;background:#0d1b13;color:#dce8e0;font-size:10px;font-weight:800}.gk-outcomes input:checked+span{border-color:var(--green);background:var(--green);color:#06100a}.goalkeeper-context .notes-label{margin-bottom:25px}.goalkeeper-context .note-box textarea{min-height:110px}
 .review-player{grid-template-columns:58px 1fr auto}
 .review-player .gk-check{display:flex;align-items:center;gap:4px;margin:0;padding:0 4px;color:#9db0a4;font-size:9px}
 .review-player .gk-check input{width:auto;margin:0}
@@ -366,3 +367,5 @@ legend{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#91a39
 .closing-summary{padding:15px;border:1px solid #2d6a46;border-radius:15px;background:#102219;margin-bottom:24px}.closing-summary.terminated{border-color:#8b5938;background:#21170f}.closing-summary small{display:block;margin-bottom:7px}.closing-summary b{font-size:12px}.closing-summary p{font-size:11px;line-height:1.5;color:#b9c8be;margin:7px 0 0}
 .form-error{margin:12px 0 0;padding:10px;border:1px solid #a64d4d;border-radius:10px;background:#2a1212;color:#ffb5b5;font-size:10px}
 .summary-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0 26px}.summary-actions button{border:1px solid #31503d;border-radius:12px;background:#13251a;color:#b9cabf;padding:12px;font-size:10px;font-weight:850}.summary-actions #reopen-session{border-color:#b27b3f;color:#ffd092;background:#251a10}
+.shot-origin .shot-outside-box-left,.shot-origin .shot-outside-box-right{position:absolute;top:112px;bottom:7px}.shot-origin .shot-outside-box-left{left:7px;right:50%}.shot-origin .shot-outside-box-right{left:50%;right:7px}
+.goalkeeper-context{padding-bottom:calc(28px + env(safe-area-inset-bottom))}.goalkeeper-context .save-observation-bar{position:static;margin:20px -22px calc(-28px - env(safe-area-inset-bottom));padding-bottom:calc(18px + env(safe-area-inset-bottom))}

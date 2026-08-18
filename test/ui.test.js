@@ -3,10 +3,11 @@ import assert from'node:assert/strict';
 import{readFile}from'node:fs/promises';
 
 const root=new URL('../',import.meta.url);
-const [html,css,main]=await Promise.all([
+const [html,css,main,serviceWorker]=await Promise.all([
  readFile(new URL('index.html',root),'utf8'),
  readFile(new URL('src/styles.css',root),'utf8'),
- readFile(new URL('src/main.js',root),'utf8')
+ readFile(new URL('src/main.js',root),'utf8'),
+ readFile(new URL('sw.js',root),'utf8')
 ]);
 
 test('keeps page-level accessibility zoom enabled',()=>{
@@ -53,4 +54,9 @@ test('supports solid team colours and the staged Team 2 placement flow',()=>{
  assert.match(main,/stage='team2'/);
  assert.match(css,/background:var\(--team-color/);
  assert.match(css,/\.colour-swatches\{/);
+});
+
+test('identifies the installed field-test build as Version 1.7',()=>{
+ assert.match(main,/VERSION 1\.7 FIELD-TEST EXPORT/);
+ assert.match(serviceWorker,/scoutline-v1-7-0/);
 });

@@ -1,4 +1,4 @@
-# Scoutline — Version 1.6
+# Scoutline — Version 1.7
 
 Roadmap styles:
 
@@ -107,6 +107,17 @@ See [Version 1.5 change and deployment notes](docs/V1.5-CHANGELOG.md).
 Automatic extraction requires `OPENAI_API_KEY` in the Vercel project environment. The key is used only by the server function and is never included in browser code. `OPENAI_LINEUP_MODEL` is optional and defaults to `gpt-5.6-luna`. Set `SCOUTLINE_ALLOWED_ORIGIN` to the permanent production address to reject browser requests from other sites; the function also limits repeated requests from one address.
 
 See [Version 1.6 field-test and deployment notes](docs/V1.6-FIELD-TEST.md).
+
+## Version 1.7 — goalkeeper analysis and team identification
+
+- Goalkeeper observations link a nine-zone save location to one of seven shot-origin areas.
+- Goalkeeper outcomes record saves, goals, parries, claims, punches and other actions.
+- Optional goalkeeper notes retain their match timestamp for later video review.
+- Team player icons use one confirmed solid colour per team, with a manual override and clash warning.
+- Team 1 remains visible until **Now add Team 2** is selected, is temporarily hidden during Team 2 placement, then returns for final overlap adjustment.
+- Structured exports include goalkeeper-specific fields and team icon colours.
+
+See [Version 1.7 field-test notes](docs/V1.7-FIELD-TEST.md).
 
 ## Version 2.0 workload
 

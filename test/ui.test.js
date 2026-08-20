@@ -56,6 +56,12 @@ test('supports solid team colours and the staged Team 2 placement flow',()=>{
  assert.match(css,/\.colour-swatches\{/);
 });
 
+test('allows a saved team-sheet image instead of forcing the mobile camera',()=>{
+ assert.match(main,/name="image" type="file" accept="image\/\*"/);
+ assert.doesNotMatch(main,/capture="environment"/);
+ assert.match(main,/Choose saved image or take photo/);
+});
+
 test('identifies the installed field-test build as Version 1.7',()=>{
  assert.match(main,/VERSION 1\.7 FIELD-TEST EXPORT/);
  assert.match(serviceWorker,/scoutline-v1-7-0/);

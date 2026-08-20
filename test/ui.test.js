@@ -65,6 +65,15 @@ test('allows a saved team-sheet image instead of forcing the mobile camera',()=>
  assert.match(main,/Choose saved image or take photo/);
 });
 
+test('provides assignment-led notes, team choice and capped player targets',()=>{
+ for(const label of['Scouting — General','Scouting — Team Specific','Scouting — Player Specific','Scouting — Opposition','Coaching — General','Coaching — Player Specific','Goalkeeper Coaching — Specific','Media','Observer / Other'])assert.match(main,new RegExp(label));
+ assert.match(main,/name="assignmentTeam"/);
+ assert.match(main,/PLAYER_TARGET_ASSIGNMENTS/);
+ assert.match(main,/selected\.length>4/);
+ assert.match(main,/Maximum of four players/);
+ assert.match(main,/data-goalkeeper/);
+});
+
 test('identifies the installed field-test build as Version 1.7',()=>{
  assert.match(main,/VERSION 1\.7 FIELD-TEST EXPORT/);
  assert.match(serviceWorker,/scoutline-v1-7-0/);

@@ -52,6 +52,9 @@ test('supports solid team colours and the staged Team 2 placement flow',()=>{
  assert.match(main,/Now add Team 2/);
  assert.match(main,/Team 1 is temporarily hidden/);
  assert.match(main,/stage='team2'/);
+ assert.match(main,/placingSecond=state\.match\.deployment\?\.stage==="team2"/);
+ assert.match(main,/Confirm Team 2 positions/);
+ assert.match(main,/function confirmTeamTwoPositions/);
  assert.match(css,/background:var\(--team-color/);
  assert.match(css,/\.colour-swatches\{/);
 });

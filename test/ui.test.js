@@ -3,10 +3,11 @@ import assert from'node:assert/strict';
 import{readFile}from'node:fs/promises';
 
 const root=new URL('../',import.meta.url);
-const [html,css,main,serviceWorker]=await Promise.all([
+const [html,css,main,model,serviceWorker]=await Promise.all([
  readFile(new URL('index.html',root),'utf8'),
  readFile(new URL('src/styles.css',root),'utf8'),
  readFile(new URL('src/main.js',root),'utf8'),
+ readFile(new URL('src/model.js',root),'utf8'),
  readFile(new URL('sw.js',root),'utf8')
 ]);
 
@@ -27,8 +28,20 @@ test('limits gesture locking to match-day interaction surfaces',()=>{
 });
 
 test('provides the wide Quick Note route and explicit note scopes',()=>{
- assert.match(css,/\.quick-note-button\{[^}]*grid-column:span 3/);
+ assert.match(css,/\.quick-note-button\{[^}]*grid-column:span 2/);
  assert.match(css,/\.note-scope>div\{[^}]*grid-template-columns:repeat\(3,1fr\)/);
+});
+
+test('keeps evidence grouping behind a compact second action page',()=>{
+ for(const heading of['Positioning','Movement','Physical','Technique','Decision'])assert.match(model,new RegExp(`evidenceCategory:'${heading}'`));
+ assert.match(main,/name="actions"/);
+ assert.match(main,/continue-actions/);
+ assert.match(main,/continue-secondary-actions/);
+ for(const action of['movement','off-ball-run','strength','speed','acceleration','pace-with-ball','first-touch','control','footwork','decision'])assert.match(model,new RegExp(action));
+ assert.match(main,/data-secondary-action/);
+ assert.match(main,/data-evidence-category/);
+ assert.doesNotMatch(main,/stage:'other',quality:'',bodyPart:''/);
+ assert.match(css,/\.page-two-grid\{grid-template-columns:repeat\(4,1fr\)/);
 });
 
 test('requires core match metadata and blocks reporting exports until it is complete',()=>{
@@ -81,7 +94,7 @@ test('provides assignment-led notes, team choice and capped player targets',()=>
  assert.match(main,/data-goalkeeper/);
 });
 
-test('identifies the installed field-test build as Version 1.7',()=>{
+test('identifies the installed Version 1.8 app and Version 1.7 export schema',()=>{
  assert.match(main,/VERSION 1\.7 FIELD-TEST EXPORT/);
- assert.match(serviceWorker,/scoutline-v1-7-0/);
+ assert.match(serviceWorker,/scoutline-v1-8-0-build-2/);
 });

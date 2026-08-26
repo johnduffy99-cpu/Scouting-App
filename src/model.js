@@ -62,7 +62,7 @@ export const freshState=()=>({match:null,players:[],events:[],lineups:{home:null
 export const BACKUP_SCHEMA_VERSION=1;
 export const MATCH_EXPORT_SCHEMA_VERSION='1.7';
 export const APP_VERSION='1.8.0';
-export const APP_BUILD='2026.08.26.2';
+export const APP_BUILD='2026.08.26.3';
 export function createMatchBackup(state,{exportedAt=new Date().toISOString(),storageKey='scoutline-sprint1'}={}){return{schemaVersion:BACKUP_SCHEMA_VERSION,exportedAt,storageKey,state:JSON.parse(JSON.stringify(state))}}
 export function matchBackupFilename(state,exportedAt=new Date().toISOString()){const safe=value=>String(value||'').normalize('NFKD').replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60);const match=state?.match||{},teams=[safe(match.home),safe(match.away)].filter(Boolean).join('-v-')||'match';const matchDate=new Date(match.matchDate||match.date||match.createdAt||exportedAt);const date=Number.isNaN(matchDate.getTime())?safe(match.matchDate||match.date)||'undated':matchDate.toISOString().slice(0,10);const timestamp=exportedAt.replace(/\.\d{3}Z$/,'Z').replace(/:/g,'-');return`${teams}-${date}-backup-${safe(timestamp)}.json`}
 function exportBaseFilename(state){const safe=value=>String(value||'').normalize('NFKD').replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60),match=state?.match||{},teams=[safe(match.home),safe(match.away)].filter(Boolean).join('-v-')||'match',rawDate=match.matchDate||match.date||match.createdAt,dateValue=new Date(rawDate||0),date=rawDate&&!Number.isNaN(dateValue.getTime())?dateValue.toISOString().slice(0,10):safe(rawDate)||'undated';return`${teams}-${date}`}

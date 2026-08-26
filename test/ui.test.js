@@ -3,13 +3,19 @@ import assert from'node:assert/strict';
 import{readFile}from'node:fs/promises';
 
 const root=new URL('../',import.meta.url);
-const [html,css,main,model,serviceWorker]=await Promise.all([
+const [html,manifestText,css,main,model,serviceWorker,appleIcon,icon192,icon512,maskableIcon]=await Promise.all([
  readFile(new URL('index.html',root),'utf8'),
+ readFile(new URL('manifest.webmanifest',root),'utf8'),
  readFile(new URL('src/styles.css',root),'utf8'),
  readFile(new URL('src/main.js',root),'utf8'),
  readFile(new URL('src/model.js',root),'utf8'),
- readFile(new URL('sw.js',root),'utf8')
+ readFile(new URL('sw.js',root),'utf8'),
+ readFile(new URL('icons/apple-touch-icon.png',root)),
+ readFile(new URL('icons/icon-192.png',root)),
+ readFile(new URL('icons/icon-512.png',root)),
+ readFile(new URL('icons/icon-maskable-512.png',root))
 ]);
+const manifest=JSON.parse(manifestText);
 
 test('keeps page-level accessibility zoom enabled',()=>{
  assert.doesNotMatch(html,/user-scalable\s*=\s*no/i);
@@ -18,6 +24,20 @@ test('keeps page-level accessibility zoom enabled',()=>{
 
 test('prevents mobile focus zoom without globally locking the page',()=>{
  assert.match(css,/input,select,textarea\{font-size:16px\}/);
+});
+
+test('provides install-ready Home Screen metadata and icons',()=>{
+ assert.equal(manifest.id,'/');
+ assert.equal(manifest.scope,'/');
+ assert.equal(manifest.display,'standalone');
+ assert.equal(manifest.orientation,'portrait-primary');
+ assert.deepEqual(manifest.icons.map(icon=>[icon.sizes,icon.type,icon.purpose]),[['192x192','image/png','any'],['512x512','image/png','any'],['512x512','image/png','maskable']]);
+ assert.match(html,/apple-mobile-web-app-capable" content="yes"/);
+ assert.match(html,/apple-mobile-web-app-status-bar-style" content="black-translucent"/);
+ assert.match(html,/apple-mobile-web-app-title" content="Scoutline"/);
+ assert.match(html,/rel="apple-touch-icon" sizes="180x180" href="\/icons\/apple-touch-icon\.png"/);
+ for(const icon of[appleIcon,icon192,icon512,maskableIcon])assert.deepEqual([...icon.subarray(0,8)],[137,80,78,71,13,10,26,10]);
+ for(const asset of['apple-touch-icon.png','icon-192.png','icon-512.png','icon-maskable-512.png'])assert.match(serviceWorker,new RegExp(asset.replace('.','\\.')));
 });
 
 test('limits gesture locking to match-day interaction surfaces',()=>{
@@ -96,5 +116,5 @@ test('provides assignment-led notes, team choice and capped player targets',()=>
 
 test('identifies the installed Version 1.8 app and Version 1.7 export schema',()=>{
  assert.match(main,/VERSION 1\.7 FIELD-TEST EXPORT/);
- assert.match(serviceWorker,/scoutline-v1-8-0-build-2/);
+ assert.match(serviceWorker,/scoutline-v1-8-0-build-3/);
 });

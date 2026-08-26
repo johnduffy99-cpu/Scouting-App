@@ -65,6 +65,13 @@ test('allows a saved team-sheet image instead of forcing the mobile camera',()=>
  assert.match(main,/Choose saved image or take photo/);
 });
 
+test('supports one-image two-team extraction through sequential validation',()=>{
+ assert.match(main,/name="bothTeams"/);
+ assert.match(main,/bothTeams=d\.get\('bothTeams'\)==='on'/);
+ assert.match(main,/showPendingLineupReview/);
+ assert.match(main,/Use AI Assistant · pluggable source/);
+});
+
 test('provides assignment-led notes, team choice and capped player targets',()=>{
  for(const label of['Scouting — General','Scouting — Team Specific','Scouting — Player Specific','Scouting — Opposition','Coaching — General','Coaching — Player Specific','Goalkeeper Coaching — Specific','Media','Observer / Other'])assert.match(main,new RegExp(label));
  assert.match(main,/name="assignmentTeam"/);

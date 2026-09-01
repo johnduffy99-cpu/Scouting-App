@@ -254,6 +254,7 @@ legend{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#91a39
 .next-step button{margin-top:7px;border:0;border-radius:12px;background:var(--green);color:#06100a;font-weight:900;padding:13px}
 .next-step.muted{border-color:#2c3b32;background:#0c1510}
 .next-step.confirmed{border-color:#3da966}
+.start-feedback{margin:12px 0;padding:14px 16px;border:1px solid #ef6b62;border-radius:12px;background:#3a1718;color:#fff;font-weight:700}
 .pitch-actions button{max-width:220px;margin:auto}
 
 .panel-step{text-align:center;color:#708478;font-size:9px;letter-spacing:.14em;font-weight:900;margin:-5px 0 15px}

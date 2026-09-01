@@ -62,7 +62,16 @@ export const freshState=()=>({match:null,players:[],events:[],lineups:{home:null
 export const BACKUP_SCHEMA_VERSION=1;
 export const MATCH_EXPORT_SCHEMA_VERSION='1.7';
 export const APP_VERSION='1.8.0';
-export const APP_BUILD='2026.08.26.3';
+export const APP_BUILD='2026.09.01.1';
+export function matchStartReadiness(state){
+ const period=state?.clock?.period||'pre',players=state?.players||[],lineups=state?.lineups||{},lineupCount=['home','away'].filter(side=>lineups[side]).length,activePlayers=players.filter(player=>player.squadRole!=='substitute'&&player.squadRole!=='sent-off'&&!player.sentOff);
+ if(!state?.match)return{ready:false,code:'no-match',message:'Create or restore a match before starting the clock.'};
+ if(period!=='pre'||state.clock?.running||state.clock?.seconds>0)return{ready:false,code:'already-started',message:'This match clock has already started.'};
+ if(!activePlayers.length)return{ready:false,code:'no-players',message:'Add at least one player to the pitch before starting the clock.'};
+ if(state.match.deployment?.stage==='team2'||lineupCount===1)return{ready:false,code:'lineups-incomplete',message:'Finish adding and positioning Team 2 before starting the clock.'};
+ if(!state.match.placementConfirmed)return{ready:false,code:'positions-unconfirmed',message:'Confirm the player positions before starting the clock.'};
+ return{ready:true,code:'ready',message:'Ready to start the match clock.'};
+}
 export function createMatchBackup(state,{exportedAt=new Date().toISOString(),storageKey='scoutline-sprint1'}={}){return{schemaVersion:BACKUP_SCHEMA_VERSION,exportedAt,storageKey,state:JSON.parse(JSON.stringify(state))}}
 export function matchBackupFilename(state,exportedAt=new Date().toISOString()){const safe=value=>String(value||'').normalize('NFKD').replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60);const match=state?.match||{},teams=[safe(match.home),safe(match.away)].filter(Boolean).join('-v-')||'match';const matchDate=new Date(match.matchDate||match.date||match.createdAt||exportedAt);const date=Number.isNaN(matchDate.getTime())?safe(match.matchDate||match.date)||'undated':matchDate.toISOString().slice(0,10);const timestamp=exportedAt.replace(/\.\d{3}Z$/,'Z').replace(/:/g,'-');return`${teams}-${date}-backup-${safe(timestamp)}.json`}
 function exportBaseFilename(state){const safe=value=>String(value||'').normalize('NFKD').replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60),match=state?.match||{},teams=[safe(match.home),safe(match.away)].filter(Boolean).join('-v-')||'match',rawDate=match.matchDate||match.date||match.createdAt,dateValue=new Date(rawDate||0),date=rawDate&&!Number.isNaN(dateValue.getTime())?dateValue.toISOString().slice(0,10):safe(rawDate)||'undated';return`${teams}-${date}`}

@@ -116,5 +116,13 @@ test('provides assignment-led notes, team choice and capped player targets',()=>
 
 test('identifies the installed Version 1.8 app and Version 1.7 export schema',()=>{
  assert.match(main,/VERSION 1\.7 FIELD-TEST EXPORT/);
- assert.match(serviceWorker,/scoutline-v1-8-0-build-3/);
+ assert.match(serviceWorker,/scoutline-v1-8-0-build-2026-09-01-1/);
+});
+
+test('keeps pre-match evidence separate from clock-start state and provides visible failure feedback',()=>{
+ assert.doesNotMatch(main,/clock\.seconds>0\|\|state\.events\.length>0/);
+ assert.match(main,/event\.type!==\'pitch-capture\'/);
+ assert.match(main,/role="alert" aria-live="assertive"/);
+ assert.match(main,/Your existing match data is unchanged/);
+ assert.match(main,/Review the players on the pitch/);
 });

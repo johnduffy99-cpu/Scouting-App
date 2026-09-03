@@ -80,6 +80,15 @@ test('provides the approved seven-zone goalkeeper workflow',()=>{
  assert.match(css,/\.gk-outcomes\{/);
 });
 
+test('keeps UI save state separate from football goalkeeper outcomes',()=>{
+ assert.match(main,/goalkeeperSave=selectedActions\.includes\('save'\)/);
+ assert.match(main,/goalkeeperOutcome=goalkeeperSave\?/);
+});
+
+test('auto-dismisses pitch-capture confirmation',()=>{
+ assert.match(main,/function capturePitch\(\).*savedNoticeTimer=setTimeout/);
+});
+
 test('supports solid team colours and the staged Team 2 placement flow',()=>{
  assert.match(main,/name="teamColour"/);
  assert.match(main,/Now add Team 2/);
@@ -116,7 +125,7 @@ test('provides assignment-led notes, team choice and capped player targets',()=>
 
 test('identifies the installed Version 1.8 app and Version 1.7 export schema',()=>{
  assert.match(main,/VERSION 1\.7 FIELD-TEST EXPORT/);
- assert.match(serviceWorker,/scoutline-v1-8-0-build-2026-09-01-1/);
+ assert.match(serviceWorker,/scoutline-v1-8-0-build-2026-09-03-1/);
 });
 
 test('keeps pre-match evidence separate from clock-start state and provides visible failure feedback',()=>{

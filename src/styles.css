@@ -155,6 +155,7 @@ footer span{color:var(--green)}
 .event p{font-size:10px;color:#8da096;margin:3px 0}
 
 .event blockquote{font-size:12px;border-left:2px solid #30463a;margin:8px 0 0;padding-left:9px;color:#c5d2ca}
+.correct-attribution{margin-top:8px;padding:6px 9px;border:1px solid #4f6256;background:#19251e;color:#9caaa1;font-size:10px}.correct-attribution.holding{background:#604817;border-color:#d7a73d;color:#fff}.corrected-marker{display:inline-block;margin-left:7px;padding:3px 6px;border-radius:10px;background:#604817;color:#f5d998;font-size:8px;font-weight:850;text-transform:uppercase}.attribution-correction dl{margin:12px 0}.attribution-correction dl div{padding:8px 0;border-bottom:1px solid #dfe3de}.attribution-correction dt{font-size:9px;color:#68716b;text-transform:uppercase}.attribution-correction dd{margin:3px 0 0;font-weight:750}
 
 .handle{width:42px;height:4px;border-radius:3px;background:#304238;margin:-14px auto 20px}
 

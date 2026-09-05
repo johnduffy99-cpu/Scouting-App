@@ -85,6 +85,14 @@ test('keeps UI save state separate from football goalkeeper outcomes',()=>{
  assert.match(main,/goalkeeperOutcome=goalkeeperSave\?/);
 });
 
+test('guards emergency attribution correction behind hold and explicit confirmation',()=>{
+ assert.match(main,/data-correct-event/);
+ assert.match(main,/setTimeout\(\(\)=>.*openAttributionCorrection/s);
+ assert.match(main,/name="confirmed" required/);
+ assert.match(main,/Attribution corrected/);
+ assert.doesNotMatch(main,/contenteditable/);
+});
+
 test('auto-dismisses pitch-capture confirmation',()=>{
  assert.match(main,/function capturePitch\(\).*savedNoticeTimer=setTimeout/);
 });

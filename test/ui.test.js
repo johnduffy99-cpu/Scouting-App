@@ -72,17 +72,18 @@ test('requires core match metadata and blocks reporting exports until it is comp
  assert.match(main,/downloadHandoffReport\(\).*ensureExportMetadata\('handoff'\)/);
 });
 
-test('provides the approved seven-zone goalkeeper workflow',()=>{
- assert.match(main,/GOALKEEPER OBSERVATION · 2 OF 2/);
+test('provides the revised conditional goalkeeper location workflow',()=>{
+ assert.match(main,/GOALKEEPER \$\{result\.toUpperCase\(\)\} · LOCATION/);
  assert.match(main,/name="shotOrigin"/);
- assert.match(main,/name="goalkeeperOutcome"/);
+ assert.doesNotMatch(main,/name="goalkeeperOutcome"/);
+ assert.match(main,/some\(action=>\['save','goal'\]\.includes\(action\)\)/);
+ assert.match(main,/id="save-observation-early"/);
  assert.match(css,/\.shot-origin\{/);
- assert.match(css,/\.gk-outcomes\{/);
 });
 
 test('keeps UI save state separate from football goalkeeper outcomes',()=>{
- assert.match(main,/goalkeeperSave=selectedActions\.includes\('save'\)/);
- assert.match(main,/goalkeeperOutcome=goalkeeperSave\?/);
+ assert.match(main,/goalkeeperResult=isGoalkeeper\(player\)/);
+ assert.match(main,/goalkeeperOutcome:goalkeeperResult/);
 });
 
 test('guards emergency attribution correction behind hold and explicit confirmation',()=>{
@@ -133,7 +134,7 @@ test('provides assignment-led notes, team choice and capped player targets',()=>
 
 test('identifies the installed Version 1.8 app and Version 1.7 export schema',()=>{
  assert.match(main,/VERSION 1\.7 FIELD-TEST EXPORT/);
- assert.match(serviceWorker,/scoutline-v1-8-0-build-2026-09-05-4/);
+ assert.match(serviceWorker,/scoutline-v1-8-0-build-2026-09-06-1/);
 });
 
 test('keeps pre-match evidence separate from clock-start state and provides visible failure feedback',()=>{

@@ -7,8 +7,8 @@ const capture=async(page,name)=>{if(screenshotDir)await page.screenshot({path:`$
 const storageKey='scoutline-sprint1';
 const matchState={
  match:{home:'Test Home',away:'Test Away',competition:'Mobile acceptance',venue:'Test',matchDate:'2026-09-06',createdAt:1,placementConfirmed:true},
- players:[{id:'gk1',name:'Test Keeper',number:'1',position:'GK',goalkeeper:true,teamSide:'home',teamColor:'#ef4444',initialSquadRole:'starter',squadRole:'starter',x:50,y:90}],
- events:[],lineups:{home:null,away:null},clock:{seconds:600,running:false,startedAt:null,period:'first'}
+ players:[{id:'gk1',name:'Test Keeper',number:'1',teamSide:'home',teamColor:'#ef4444',initialSquadRole:'starter',squadRole:'starter',x:50,y:90}],
+ events:[],lineups:{home:{team:'Test Home',starters:[{name:'Test Keeper',number:'1',goalkeeper:true}],substitutes:[]},away:null},clock:{seconds:600,running:false,startedAt:null,period:'first'}
 };
 
 const browser=await chromium.launch({headless:true,...(process.env.CHROME_EXECUTABLE?{executablePath:process.env.CHROME_EXECUTABLE}:{})});

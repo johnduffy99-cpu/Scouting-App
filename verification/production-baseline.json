@@ -1,0 +1,11 @@
+{
+  "checked": "2026-09-21",
+  "url": "https://scouting-app-eta.vercel.app",
+  "commit": "123dab5739e09879b33e639c647c7bc76385ce3b",
+  "result": "main.js, model.js and sw.js byte-match commit",
+  "sha256": {
+    "production-sw.js": "415e8eed26c4277dc64d35d79d47670142add45b89d0d1b3eef78af4ff5f9d76",
+    "production-main.js": "f859a51472d1d8568d417fa690ba660c556af8d1fc753f7441a9b49003f9b955",
+    "production-model.js": "9cb29508e930391167b92c86561fc52c17aab96fa0f5f2891e311f1dd8e3cb65"
+  }
+}

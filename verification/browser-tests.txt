@@ -1,0 +1,6 @@
+12/12 GK mobile browser scenarios passed at 390x844.
+7/7 launch/recovery scenarios passed.
+All four GK screenshots visually inspected.
+Static production build passed.
+git diff --check passed.
+Physical iPhone/Safari and real microphone not tested. No deployment.

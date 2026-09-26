@@ -61,19 +61,28 @@ export const goalkeeperOutcomes=[{id:'save',label:'Save'},{id:'goal',label:'Goal
 export const freshState=()=>({match:null,players:[],events:[],lineups:{home:null,away:null},clock:{seconds:0,running:false,startedAt:null,period:'pre',firstHalfEndedAt:null}});
 export function restoreGoalkeeperDesignations(state){
  const players=state?.players||[],lineups=state?.lineups||{};
- const key=value=>String(value||'').trim().toLocaleLowerCase('en-GB');
+ const key=value=>String(value??'').trim().toLocaleLowerCase('en-GB');
+ const sameId=(a,b)=>key(a)!==''&&key(b)!==''&&String(a)===String(b);
  for(const player of players){
-  if(player.goalkeeper||player.position==='GK')continue;
   const lineup=lineups[player.teamSide],candidates=[...(lineup?.starters||[]),...(lineup?.substitutes||[])];
-  const recorded=candidates.find(item=>item.goalkeeper&&(item.id===player.id||item.sourceId===player.sourceId||(key(item.name)===key(player.name)&&String(item.number||'')===String(player.number||''))));
-  if(recorded){player.goalkeeper=true;player.position='GK'}
+  const identified=candidates.filter(item=>sameId(item.id,player.id)||sameId(item.sourceId,player.sourceId));
+  const matches=identified.length?identified:candidates.filter(item=>key(item.name)!==''&&key(item.name)===key(player.name)&&key(item.number)!==''&&key(item.number)===key(player.number));
+  if(matches.length!==1)continue;
+  const recorded=matches[0];
+  if(recorded.goalkeeper===true){player.goalkeeper=true;player.position='GK'}
+  // Imported players inherit the confirmed lineup. Repair flags persisted by
+  // the old undefined === undefined identifier match, without touching evidence.
+  else if(player.imported&&recorded.goalkeeper===false){
+   player.goalkeeper=false;
+   if(player.position==='GK')player.position=player.initialSquadRole==='substitute'?'SUB':'';
+  }
  }
  return state;
 }
 export const BACKUP_SCHEMA_VERSION=1;
 export const MATCH_EXPORT_SCHEMA_VERSION='1.7';
-export const APP_VERSION='1.8.1';
-export const APP_BUILD='2026.09.21.1';
+export const APP_VERSION='1.8.2';
+export const APP_BUILD='2026.09.26.1';
 export function matchStartReadiness(state){
  const period=state?.clock?.period||'pre',players=state?.players||[],lineups=state?.lineups||{},lineupCount=['home','away'].filter(side=>lineups[side]).length,activePlayers=players.filter(player=>player.squadRole!=='substitute'&&player.squadRole!=='sent-off'&&!player.sentOff);
  if(!state?.match)return{ready:false,code:'no-match',message:'Create or restore a match before starting the clock.'};

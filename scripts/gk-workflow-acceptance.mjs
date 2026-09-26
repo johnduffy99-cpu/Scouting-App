@@ -7,6 +7,12 @@ await mkdir(output,{recursive:true});
 const browser=await chromium.launch({headless:true,...(process.env.CHROME_EXECUTABLE?{executablePath:process.env.CHROME_EXECUTABLE}:{})});
 const key='scoutline-sprint1';
 const state={match:{home:'Forfar',away:'Visitors',competition:'Acceptance test',venue:'Test',matchDate:'2026-09-19',createdAt:1,placementConfirmed:true},players:[{id:'gk1',name:'Neil Stafford',number:'21',goalkeeper:true,position:'GK',teamSide:'home',squadRole:'starter',x:50,y:80},{id:'p1',name:'Outfield Player',number:'9',position:'FWD',teamSide:'away',squadRole:'starter',x:30,y:30}],events:[{id:'existing',playerId:'p1',playerName:'Outfield Player',number:'9',teamSide:'away',action:'pass',quality:'Good',comment:'Existing evidence must survive.',second:60,period:'first'}],lineups:{home:null,away:null},clock:{seconds:1457,running:false,period:'first'}};
+// Reproduce real imported lineups, including flags corrupted by v1.8.1.
+state.players[1].imported=true;
+state.players.push({...state.players[1],id:'p2',name:'Second Outfielder',number:'4',x:65,y:45});
+state.lineups.away={starters:state.players.slice(1).map(p=>({name:p.name,number:p.number,goalkeeper:false})),substitutes:[]};
+state.lineups.home={starters:[{name:'Neil Stafford',number:'21',goalkeeper:true}],substitutes:[]};
+state.players.slice(1).forEach(p=>{p.goalkeeper=true;p.position='GK'});
 let checks=0;
 const errors=[];
 const newPage=async()=>{const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});const page=await context.newPage();page.on('pageerror',error=>errors.push(error.message));await page.goto(url);await page.evaluate(({key,state})=>localStorage.setItem(key,JSON.stringify(state)),{key,state});await page.reload();await page.locator("#resume").click();return page;};
@@ -39,6 +45,18 @@ try{
   const p=await newPage();await open(p);await p.getByRole('button',{name:/Additional Actions/}).click();await choose(p,label);await save(p);await p.getByRole('heading',{name:'Observation Saved'}).waitFor();const s=await data(p);assert.equal(Boolean(s.players[0].sentOff),label!=='Yellow Card');assert.equal(s.events.length,2);await p.reload();assert.equal((await data(p)).players[0].squadRole,label==='Yellow Card'?'starter':'sent-off');checks++;await p.context().close();
  }
  const failure=await newPage();await open(failure);await choose(failure,'Punch');await failure.evaluate(()=>{window.originalSetItem=Storage.prototype.setItem;Storage.prototype.setItem=function(){throw new Error('QuotaExceededError')}});await save(failure);assert.match(await failure.locator('#gk-error').innerText(),/Could not save/);assert.equal(await failure.locator('[value=punch]').isChecked(),true);assert.equal((await data(failure)).events.length,1);await failure.evaluate(()=>Storage.prototype.setItem=window.originalSetItem);await save(failure);assert.equal((await data(failure)).events.length,2);checks++;
+ const switching=await newPage();
+ for(const id of ['gk1','p1','p2','gk1','p2','p1']){
+  await switching.locator(`[data-player="${id}"]`).click();
+  assert.equal(await switching.locator('#gk-form').count(),id==='gk1'?1:0);
+  assert.equal(await switching.locator('#action-form').count(),id==='gk1'?0:1);
+  if(id!=='gk1'){
+   for(const action of ['shot','cross','dribble','run','block'])assert.equal(await switching.locator(`[name=actions][value="${action}"]`).count(),1);
+   assert.equal(await switching.locator('[name=gkAction]').count(),0);
+  }
+  await switching.locator('.close-panel').click();
+ }
+ assert.deepEqual((await data(switching)).events,state.events);checks++;
  const outfield=await newPage();await outfield.locator('[data-player=p1]').click();await outfield.getByText('Good',{exact:true}).click();await outfield.locator('[name=bodyPart][value=right-foot]').locator('..').click();await outfield.getByText('Pass',{exact:true}).click();await outfield.locator('#continue-actions').click();await outfield.getByRole('button',{name:'Save to timeline',exact:true}).click();assert.equal((await data(outfield)).events.length,2);assert.equal((await data(outfield)).events[1].action,'pass');checks++;
  assert.deepEqual(errors,[]);console.log(`${checks} mobile browser scenarios passed at 390x844; reload, storage-failure recovery, cards, outfield regression and screenshots verified.`);
 }finally{await browser.close()}

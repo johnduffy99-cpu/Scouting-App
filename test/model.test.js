@@ -76,3 +76,24 @@ test('ambiguous lineup identities and manual goalkeeper designations remain unch
  const state={players,lineups:{home:{starters:[{name:'Manual',number:'2',goalkeeper:false},{name:'Duplicate',number:'3',goalkeeper:true},{name:'Duplicate',number:'3',goalkeeper:false}]}}};
  const before=JSON.stringify(state);restoreGoalkeeperDesignations(state);assert.equal(JSON.stringify(state),before);
 });
+test('own goals retain attribution, survive backup/export and award the opponent once',()=>{
+ for(const teamSide of ['home','away'])for(const goalkeeper of [false,true]){
+  const player={id:'og-player',name:'Own Goal Player',number:'1',teamSide,goalkeeper};
+  const event=makeSpecialEvent({player,teamName:'Responsible team',action:'own-goal',second:125,note:'Deflected cross'});
+  assert.equal(event.playerId,player.id);assert.equal(event.teamSide,teamSide);assert.match(event.generatedComment,/Own Goal/);assert.equal(event.second,125);
+  const score=teamSide==='home'?{home:0,away:1}:{home:1,away:0};
+  assert.deepEqual(scoreFromEvents([event]),score);
+  assert.deepEqual(scoreFromEvents([{...event,actions:['own-goal','goal'],goalkeeperOutcome:'goal'}]),score);
+  const state={match:{home:'Home',away:'Away'},players:[player],events:[event],clock:{period:'first'}};
+  const restored=JSON.parse(JSON.stringify(createMatchBackup(state))).state;
+  assert.deepEqual(scoreFromEvents(restored.events),score);
+  const exported=createStructuredMatchExport(restored);
+  assert.deepEqual(exported.match.score,score);assert.equal(exported.matchEvents[0].action,'own-goal');
+ }
+ assert.deepEqual(scoreFromEvents([{action:'own-goal',teamSide:''}]),{home:0,away:0});
+});
+test('own goal attribution correction recalculates the opposing score',()=>{
+ const event=makeSpecialEvent({player:{id:'home',name:'Home Player',teamSide:'home'},action:'own-goal',second:90});
+ const corrected=correctEventAttribution(event,{id:'away',name:'Away Player',teamSide:'away'});
+ assert.deepEqual(scoreFromEvents([corrected]),{home:1,away:0});assert.equal(corrected.originalAttribution.playerId,'home');
+});

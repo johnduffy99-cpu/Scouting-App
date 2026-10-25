@@ -9,7 +9,7 @@ const source=(await readFile(new URL('../src/main.js',import.meta.url),'utf8')).
 function harness(state){
  const store=new Map([['scoutline-sprint1',JSON.stringify(state)]]),app={innerHTML:'',insertAdjacentHTML(){}};
  let sent;
- const ctx=vm.createContext({...model,...modes,...gk,crypto,TextEncoder,Date,JSON,console,clearInterval(){},setInterval(){},clearTimeout(){},setTimeout(){},navigator:{},window:{},alert(message){throw Error(message)},document:{querySelector:s=>s==='#app'?app:null,querySelectorAll:()=>[],addEventListener(){}},localStorage:{getItem:k=>store.get(k),setItem:(k,v)=>store.set(k,v)},fetch:async(url,request)=>{sent=JSON.parse(request.body);return{ok:true,json:async()=>({pipelineStatus:'Received by SIP',receiptId:'LOCAL-MOCK'})}}});
+ const ctx=vm.createContext({...model,...modes,...gk,crypto,FormData,TextEncoder,Date,JSON,console,clearInterval(){},setInterval(){},clearTimeout(){},setTimeout(){},navigator:{},window:{},alert(message){throw Error(message)},document:{querySelector:s=>s==='#app'?app:null,querySelectorAll:()=>[],addEventListener(){}},localStorage:{getItem:k=>store.get(k),setItem:(k,v)=>store.set(k,v)},fetch:async(url,request)=>{sent=JSON.parse(request.body);return{ok:true,json:async()=>({pipelineStatus:'Received by SIP',receiptId:'LOCAL-MOCK'})}}});
  vm.runInContext(source,ctx);
  return {run:script=>vm.runInContext(script,ctx),app,store,get sent(){return sent}};
 }
@@ -24,4 +24,26 @@ test('actual submission handler commits one/two GK evidence and retains receipt 
  for(const two of [false,true]){const state=session();if(two)modes.addGoalkeeper(state,{name:'Other',teamSide:'home'});state.match.reportStatus='complete';state.clock.period='fulltime';
  const ui=harness(state);await ui.run('submitMatch()');const payload=JSON.parse(ui.sent.source.json);assert.equal(payload.players.length,two?2:1);assert.equal(payload.match.assignment.type,modes.GK_ONLY);
  const restored=harness(JSON.parse(ui.store.get('scoutline-sprint1')));assert.equal(restored.run('state.match.submissionReceipt.receiptId'),'LOCAL-MOCK');}
+});
+test('Own Goal replaces Treatment on page two for outfield and goalkeeper players',()=>{
+ const state=session();state.players.push({id:'outfield',name:'Outfield',teamSide:'home',number:'4'});
+ const ui=harness(state);
+ for(const p of state.players){
+  const panel=ui.run(`selected=${JSON.stringify(p.id)};draftObservation={stage:'other',actions:[]};otherPanel(state.players.find(p=>p.id===selected))`);
+  assert.match(panel,/data-special="own-goal"><i>OG<\/i><b>Own Goal/);assert.doesNotMatch(panel,/data-special="treatment"/);
+  ui.run("selectSpecial('own-goal')");assert.equal(ui.run('draftObservation.special'),true);
+  assert.match(ui.run('specialContextPanel(state.players.find(p=>p.id===selected))'),/Own Goal/);
+ }
+});
+
+test('actual Own Goal save updates score once and persists on reload',()=>{
+ for(const teamSide of ['home','away']){
+  const state=session();state.players[0].teamSide=teamSide;
+  const ui=harness(state),id=state.players[0].id;
+  ui.run(`selected=${JSON.stringify(id)};draftObservation={stage:'other',actions:[]};selectSpecial('own-goal');saveDraftEvent()`);
+  const saved=JSON.parse(ui.store.get('scoutline-sprint1'));
+  assert.equal(saved.events.length,1);assert.equal(saved.events[0].action,'own-goal');assert.equal(saved.events[0].playerId,id);
+  assert.deepEqual(model.scoreFromEvents(saved.events),teamSide==='home'?{home:0,away:1}:{home:1,away:0});
+  const restored=harness(saved);assert.match(restored.run('timelineEvent(state.events[0])'),/Own Goal/);
+ }
 });

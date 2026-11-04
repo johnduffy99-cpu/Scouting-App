@@ -1,0 +1,6 @@
+skip, 0 sheets: importer validation passed; exactly one real player
+skip, 1 sheets: importer validation passed; exactly one real player
+skip, 2 sheets: importer validation passed; exactly one real player
+add, 0 sheets: importer validation passed; exactly one real player
+add, 1 sheets: importer validation passed; exactly one real player
+add, 2 sheets: importer validation passed; exactly one real player

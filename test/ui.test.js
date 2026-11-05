@@ -134,7 +134,7 @@ test('provides assignment-led notes, team choice and capped player targets',()=>
 
 test('identifies the installed Version 1.8 app and Version 1.7 export schema',()=>{
  assert.match(main,/VERSION 1\.7 FIELD-TEST EXPORT/);
- assert.match(serviceWorker,/scoutline-v1-8-2-build-2026-10-10-1/);
+ assert.match(serviceWorker,/scoutline-v1-8-3-build-2026-11-04-1/);
 });
 
 test('keeps pre-match evidence separate from clock-start state and provides visible failure feedback',()=>{
@@ -143,4 +143,16 @@ test('keeps pre-match evidence separate from clock-start state and provides visi
  assert.match(main,/role="alert" aria-live="assertive"/);
  assert.match(main,/Your existing match data is unchanged/);
  assert.match(main,/Review the players on the pitch/);
+});
+
+test('Single Player identifies a target before offering both names routes',()=>{
+ assert.match(main,/<option value="scouting-player">Single Player<\/option>/);
+ assert.match(main,/function openSingleTarget/);
+ assert.match(main,/Identify target player/);
+ assert.match(main,/Add other player names \/ full or partial team line-ups/);
+ assert.match(main,/Continue without other player names/);
+ assert.match(main,/chooseOtherPlayerNames\(state,e.submitter.value\)/);
+ assert.match(main,/if\(state.match.otherPlayerNames==='add'\)openImport\(\)/);
+ assert.match(main,/mergeSinglePlayerSquad\(state,squad,side\)/);
+ assert.match(main,/!isGkOnly\(state\)&&!isSinglePlayer\(state\)/);
 });

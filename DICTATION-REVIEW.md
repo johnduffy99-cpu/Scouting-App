@@ -1,7 +1,7 @@
 # Live dictation repair — review candidate, 15 November 2026
 
 Status: technically validated candidate; not a claim of iPhone or stadium acceptance.
-Baseline: main a0a870b34445c4866664f6be461c2d4a78a1f8f9. Candidate build: 2026.11.15.1, app v1.8.3, export schema v1.7.
+Baseline: main a0a870b34445c4866664f6be461c2d4a78a1f8f9. Candidate build: 2026.11.15.2, app v1.8.3, export schema v1.7.
 
 ## Customer evidence
 
@@ -56,3 +56,13 @@ Rollback is the unchanged baseline a0a870b (build 2026.11.04.1). No match schema
 - https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognitionEvent/results
 - https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/audiostart_event
 - https://webkit.org/blog/11648/new-webkit-features-in-safari-14-1/
+
+## iPhone acceptance failure and note-opening isolation — build .2
+
+John reports iOS “27.01” (interpreted as 27.0.1), using Safari. As soon as he opened his first note, a screen of text/details appeared, followed by exit to the iPhone Home Screen. Exact error text, crash logs and keyboard appearance have not been supplied. This is failed acceptance of build .1, before a reported microphone tap. Do not interpret it as a reproduced speech-recognition crash.
+
+Opening a quick note requests autofocus on the textarea; the goalkeeper note also called focus() after rebuilding the panel. Build .2 removes those automatic focus requests from note editors. The keyboard now requires a deliberate tap in the text field. Dictation still requires a separate microphone tap. This is a targeted isolation change and possible workaround; automatic focus has not been proven to cause the iPhone termination.
+
+Before and after this change, ten note openings passed in desktop Playwright WebKit 26.5 and Chromium at mobile viewport size, without constructing a recognizer. After the change, both browsers also passed assertions that opening a quick note/GK note does not focus a textarea, followed by the existing synthetic dictation/save tests. 132 Node tests passed. Desktop WebKit is not iOS 27.0.1 and does not validate the native iPhone keyboard.
+
+Keep the PR in draft. The next phone check is only to open a disposable test note on build .2, without tapping the text field or microphone. Do not resume the ten-note dictation exercise until basic note opening is stable. If a screenshot of the text screen already exists, obtain it; do not require repeatedly reproducing a device/browser crash.

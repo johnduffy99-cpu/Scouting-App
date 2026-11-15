@@ -414,6 +414,10 @@ legend{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#91a39
 .gk-panel .player-title>span{flex-shrink:0}
 .gk-panel .player-title h2{text-transform:uppercase}
 .gk-controls #gk-additional{min-height:36px;font-size:12px}
+
+.recorded-voice-wrap{z-index:100}.recorded-voice-wrap audio{width:100%;margin:12px 0}.recorded-voice-wrap button,.recorded-voice-wrap a{min-height:44px;display:block;margin:10px 0;padding:10px}.recorded-voice-wrap .voice-close{margin-left:auto}.recorded-voice-wrap textarea{min-height:100px}#voice-recordings{display:block;margin:14px auto;padding:12px;border:1px solid #294033;border-radius:10px;background:#15251b;color:#aaffca}#voice-status{font-size:14px;line-height:1.5}
+.recorded-voice-wrap button:not(.primary){border:1px solid #365444;border-radius:10px;background:#15251b;color:#cce7d7;font-weight:700}.recorded-voice-wrap a{color:#6af0a4}.recorded-voice-wrap .voice-close{font-size:22px;width:44px}.recorded-voice-wrap audio{min-height:44px}
+
 ++ b/src/goalkeeper-workflow.js
 import {actions, qualities, goalkeeperBodyParts, goalAreas, shotOriginAreas, makeEvent, formatMatchClock} from './model.js';
 

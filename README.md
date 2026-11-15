@@ -153,7 +153,7 @@ npm run preview
 3. Set the build command to `npm run build` and the output directory to `dist`.
 4. Select **Deploy**.
 
-Match data stays in the browser and is private to that browser profile. The only backend operation is optional team-sheet image extraction; the image is sent to the app's Vercel function and then to OpenAI for extraction when the scout explicitly chooses it. Clearing site data removes the locally stored match. Browser dictation availability varies; Chrome-family browsers provide the widest support and will request microphone permission.
+Match data stays in the browser and is private to that browser profile. Backend operations include optional recorded-note transcription when the pilot is enabled (see RECORDED-VOICE-REVIEW.md), and optional team-sheet image extraction; the image is sent to the app's Vercel function and then to OpenAI for extraction when the scout explicitly chooses it. Clearing site data removes the locally stored match. Browser dictation availability varies; Chrome-family browsers provide the widest support and will request microphone permission.
 
 ## Match backup
 

@@ -189,20 +189,16 @@ legend{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#91a39
 
 .note-box{position:relative}
 
-.note-box textarea{min-height:82px;padding-right:50px;resize:vertical}
+.note-box textarea{min-height:82px;padding-right:62px;resize:vertical}
 
-.note-box button{position:absolute;right:9px;bottom:9px;width:34px;height:34px;border-radius:10px;border:1px solid #294033;background:#15251b;color:var(--green)}
+.note-box button{position:absolute;right:9px;bottom:9px;width:44px;height:44px;border-radius:10px;border:1px solid #294033;background:#15251b;color:var(--green)}
 
-.note-box button.listening{animation:pulse .8s infinite;background:#4c1a1f;color:#ff6f75}
+.note-box button.listening{background:#4c1a1f;color:#ff6f75}
 .note-box button:disabled{opacity:1;cursor:wait}
 .dictation-status{display:block;margin-top:7px;color:#718479;font-size:9px;font-weight:700;line-height:1.35}
 .dictation-status.listening{color:#ff8d92;font-size:10px}
 .dictation-status.success{color:#6af0a4}
 .dictation-status.error{color:#ffc27a}
-
-@keyframes pulse{50%{transform:scale(1.1)}
-
-}
 
 @media(min-width:700px){body{padding:24px}
 

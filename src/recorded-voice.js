@@ -2,7 +2,7 @@ import {saveVoiceRecording,listVoiceRecordings,deleteVoiceRecording} from './voi
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function preferredAudioType(Recorder){return ['audio/mp4','audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus'].find(t=>Recorder.isTypeSupported(t))||''}
 let opened=false;
-export async function openRecordedVoice({note=null,label='Recovered voice note',allowTranscription=false}={}){
+export async function openRecordedVoice({note=null,label='Recovered voice note',allowTranscription=true}={}){
  if(opened)return;opened=true;
  const wrap=document.createElement('div');wrap.className='modal-wrap recorded-voice-wrap';wrap.innerHTML=`<section class="modal" role="dialog" aria-modal="true" aria-labelledby="voice-title"><button type="button" class="voice-close" aria-label="Close voice recorder">×</button><h2 id="voice-title">Record a voice note</h2><p>Record up to 90 seconds. Audio is saved on this device. ${allowTranscription?'Nothing is uploaded until you choose <b>Transcribe with OpenAI</b>.':'Recording-only preview: audio stays on this device. Transcription is disabled.'}</p><p class="helper">${esc(label)}</p><button type="button" class="primary" id="voice-record">Start recording</button><p role="status" id="voice-status">Ready to record</p><div id="voice-current"></div><h3>Saved recordings</h3><p class="helper">Retained here until you delete them. Browser data clearing removes recordings.</p><div id="voice-list"></div></section>`;document.body.append(wrap);
  const status=wrap.querySelector('#voice-status'),button=wrap.querySelector('#voice-record'),area=wrap.querySelector('#voice-current'),list=wrap.querySelector('#voice-list');

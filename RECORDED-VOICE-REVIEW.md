@@ -1,6 +1,6 @@
 # Recording-based voice notes — local review prototype
 
-15 November 2026. Branch fix/recorded-voice. Build candidate 2026.11.15.3. Not published or enabled. Existing draft PR #5 and its build .2 preview are unchanged.
+15 November 2026. Branch fix/recorded-voice. Build 2026.11.16.1 enables explicit transcription controls for the approved restricted preview. Existing draft PR #5 and its build .2 preview are unchanged.
 
 ## Why this changes direction
 
@@ -38,4 +38,4 @@ During local testing, WebKit failed to persist a Blob that Chromium accepted. St
 
 The next device test should first check a few recording/playback cycles without uploading. Only after approval and pilot configuration should completed audio be sent for transcription. Do not treat a mocked test pass as proof of improved acoustic accuracy.
 
-The published recording-only app never enables the transcription controls: its recorder defaults to `allowTranscription=false`. Only the synthetic acceptance harness explicitly enables the mocked transcription path. No audio upload is available through the app UI in this preview.
+Build 2026.11.15.3 was recording-only. Following user acceptance of iPhone recording/recovery and explicit approval of a preview transcription test up to £1, build 2026.11.16.1 enables the explicit upload control. OpenAI credentials and service gates are restricted to fix/recorded-voice. Never upload audio automatically. Synthetic speech will be used first; actual quality remains unverified until the live test completes.

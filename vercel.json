@@ -1,1 +1,1 @@
-{"buildCommand":"npm run build","outputDirectory":"dist","functions":{"api/extract-lineup.js":{"maxDuration":30}}}
+{"buildCommand":"npm run build","outputDirectory":"dist","functions":{"api/extract-lineup.js":{"maxDuration":30},"api/transcribe-note.js":{"maxDuration":30}}}

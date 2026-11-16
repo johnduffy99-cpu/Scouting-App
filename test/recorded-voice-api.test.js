@@ -1,0 +1,17 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import handler from '../api/transcribe-note.js';
+import {preferredAudioType} from '../src/recorded-voice.js';
+const settings={SCOUTLINE_VOICE_TRANSCRIPTION_ENABLED:'true',SCOUTLINE_VOICE_ALLOWED_ORIGINS:'https://preview.example',SCOUTLINE_VOICE_ACCESS_CODE:'preview-test-code-123456',OPENAI_API_KEY:'mock-only-key'};
+const response=()=>({statusCode:200,status(code){this.statusCode=code;return this},json(body){this.body=body;return this},setHeader(){}});
+const request=()=>({method:'POST',headers:{origin:'https://preview.example',authorization:'Bearer preview-test-code-123456'},body:{audioBase64:Buffer.from('0000ftypisommock-audio').toString('base64'),mimeType:'audio/mp4',durationMs:5000}});
+async function run(change=()=>{},fetchImpl=async()=>({ok:true,json:async()=>({text:'Good first touch.'})})){
+ const old=Object.fromEntries(Object.keys(settings).map(k=>[k,process.env[k]])),oldFetch=global.fetch;Object.assign(process.env,settings);global.fetch=fetchImpl;const req=request(),res=response();
+ try{change(req);await handler(req,res);return res}finally{for(const [k,v] of Object.entries(old)){if(v===undefined)delete process.env[k];else process.env[k]=v}global.fetch=oldFetch}
+}
+test('paid transcription is disabled unless explicitly enabled',async()=>{let calls=0;const res=await run(()=>delete process.env.SCOUTLINE_VOICE_TRANSCRIPTION_ENABLED,()=>{calls++});assert.equal(res.statusCode,503);assert.equal(calls,0)});
+test('requires an allowed origin and pilot access code',async()=>{for(const change of [req=>req.headers.origin='https://other.example',req=>req.headers.authorization='Bearer wrong']){let calls=0;const res=await run(change,()=>{calls++});assert.ok([401,403].includes(res.statusCode));assert.equal(calls,0)}});
+test('rejects malformed/oversized/non-audio recordings before any paid call',async()=>{for(const change of [req=>req.body.audioBase64='bad!',req=>req.body.audioBase64='AAAA'.repeat(400000),req=>req.body.durationMs=100000,req=>req.body.mimeType='image/png',req=>req.body.audioBase64=Buffer.from('a random text payload').toString('base64')]){let calls=0;const res=await run(change,()=>{calls++});assert.ok(res.statusCode>=400);assert.equal(calls,0)}});
+test('sends a completed audio file and English hint without putting the key in the response',async()=>{let sent;const res=await run(()=>{},async(url,opts)=>{sent={url,opts};return{ok:true,json:async()=>({text:' Good first touch. '})}});assert.equal(res.statusCode,200);assert.equal(res.body.text,'Good first touch.');assert.equal(sent.opts.body.get('model'),'gpt-transcribe');assert.equal(sent.opts.body.get('languages[]'),'en');assert.equal(sent.opts.body.get('file').type,'audio/mp4');assert.doesNotMatch(JSON.stringify(res.body),/mock-only-key/)});
+test('service errors and empty results never invent a transcript',async()=>{for(const fetchImpl of [async()=>({ok:false}),async()=>({ok:true,json:async()=>({text:''})}),async()=>{throw Error('timeout')}]){const res=await run(()=>{},fetchImpl);assert.ok(res.statusCode>=400);assert.equal(res.body.text,undefined)}});
+test('chooses an audio format supported by the recorder',()=>{assert.equal(preferredAudioType({isTypeSupported:t=>t==='audio/mp4'}),'audio/mp4');assert.equal(preferredAudioType({isTypeSupported:t=>t==='audio/webm'}),'audio/webm');assert.equal(preferredAudioType({isTypeSupported:()=>false}),'')});

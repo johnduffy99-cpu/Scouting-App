@@ -82,8 +82,8 @@ export function restoreGoalkeeperDesignations(state){
 }
 export const BACKUP_SCHEMA_VERSION=1;
 export const MATCH_EXPORT_SCHEMA_VERSION='1.7';
-export const APP_VERSION='1.8.3';
-export const APP_BUILD='2026.11.04.1';
+export const APP_VERSION='1.8.4';
+export const APP_BUILD='2026.11.16.2';
 export function matchStartReadiness(state){
  const period=state?.clock?.period||'pre',players=state?.players||[],lineups=state?.lineups||{},lineupCount=['home','away'].filter(side=>lineups[side]).length,activePlayers=players.filter(player=>player.squadRole!=='substitute'&&player.squadRole!=='sent-off'&&!player.sentOff);
  if(!state?.match)return{ready:false,code:'no-match',message:'Create or restore a match before starting the clock.'};

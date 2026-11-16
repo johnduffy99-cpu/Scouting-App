@@ -1,4 +1,4 @@
-// Disabled by default. Preview access must be configured before any paid request.
+// Disabled by default. Device access must be configured before any paid request.
 import {timingSafeEqual} from 'node:crypto';
 const MAX_BYTES=1_000_000;
 const windows=new Map();
@@ -10,7 +10,7 @@ export default async function handler(req,res){
  const origins=(process.env.SCOUTLINE_VOICE_ALLOWED_ORIGINS||'').split(',').map(x=>x.trim()).filter(Boolean);
  if(!origins.includes(req.headers?.origin))return fail(403,'This app address is not authorised for voice transcription.');
  const code=process.env.SCOUTLINE_VOICE_ACCESS_CODE||'',supplied=String(req.headers?.authorization||'').replace(/^Bearer /,'');
- if(code.length<16||Buffer.byteLength(code)!==Buffer.byteLength(supplied)||!timingSafeEqual(Buffer.from(code),Buffer.from(supplied)))return fail(401,'A valid preview access code is required.');
+ if(code.length<16||Buffer.byteLength(code)!==Buffer.byteLength(supplied)||!timingSafeEqual(Buffer.from(code),Buffer.from(supplied)))return fail(401,'Activate transcription on this device using your private access link or device access code.');
  if(!process.env.OPENAI_API_KEY)return fail(503,'The transcription service is not configured. Your recording is safe on this device.');
  const ip=String(req.headers?.['x-forwarded-for']||req.socket?.remoteAddress||'unknown').split(',')[0];
  const now=Date.now();for(const [key,times] of windows)if(times.at(-1)<now-60000)windows.delete(key);
